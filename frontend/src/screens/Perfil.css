@@ -1,0 +1,53 @@
+.connect-spotify {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.connect-spotify button {
+    background: none;
+    border: 2px solid #888;
+    padding: 10px 20px;
+    color: #888;
+    font-size: 1.2em;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: all .2s ease-in-out;
+}
+    
+.connect-spotify button:hover  {
+    background: #555;
+    color: #aaa;
+    border: 2px solid #555;
+}
+
+.btn-connected{
+    background: #1ABB53 !important;
+    color: #000 !important;
+    border: 2px solid #1ABB53 !important;
+}
+
+.perfil-area {
+    display: flex;
+    flex-direction: column;
+    margin: 20px auto;
+    width: 90%;
+}
+
+.perfil-area h2 {
+    font-weight: 300;
+    color: #ddd;
+    font-size: 2em;
+    padding: 20px 0;
+}
+
+.desconect-spotify{
+    background: none;
+    border: 2px solid #888;
+    padding: 5px 20px;
+    color: #888;
+    font-size: 1em;
+    border-radius: 25px;
+    cursor: pointer;
+}

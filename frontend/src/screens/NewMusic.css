@@ -1,0 +1,46 @@
+
+.empty-response {
+    text-align: center;
+    font-size: 2em;
+    color: #555;
+    font-weight: 600;
+    background: #333;
+    border-radius: 5px;
+    padding: 20PX;
+}
+
+.actions-buttons{
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.actions-buttons button{
+    background: none;
+    border: 2px solid #888;
+    padding: 10px 20px;
+    color: #888;
+    font-size: 1.2em;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: all .2s ease-in-out;
+}
+
+.actions-buttons button:hover, .btn-secundary:hover {
+    background: #555;
+    color: #aaa;
+    border: 2px solid #555;
+}
+
+.btn-secundary {
+    background: none;
+    border: 2px solid #888;
+    padding: 10px 20px;
+    color: #888;
+    font-size: 1.2em;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: all .2s ease-in-out;
+}

@@ -1,0 +1,60 @@
+.menu-component-container {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+ 
+  ul{
+    list-style: none;
+    font-size: 1.2em;
+    font-weight: 300;
+    color: #ddd;
+    transition: all ease .2s;
+    width: 80px;
+  }
+
+  ul a{
+    text-decoration: none;
+    color: #ddd;
+  }
+  
+  
+  ul li {
+    padding: 20px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all .2s ease-in-out;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+
+    span {
+      display: none;  
+    }
+
+    svg {
+      font-size: 1.5em;;
+    }
+  
+  }
+  
+  ul li:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  ul:hover {
+
+    width: 200px;
+
+    span {
+      display: block;  
+    }
+  }
+
+  ul li span{
+   margin-left: 10px;
+  }
+
+}

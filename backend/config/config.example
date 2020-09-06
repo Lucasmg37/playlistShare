@@ -1,0 +1,23 @@
+[bd];
+st_name: PRIMARIO;
+st_user: ;
+st_password: ;
+st_dbname: ;
+st_host: ;
+
+[email];
+host: ;
+port:;
+username: ;
+password: ;
+SMTPSecure: ;
+SMTPAuth: ;
+IsSMTP: ;
+from: ;
+replyTo: ;
+
+[config];
+st_operacao: DEV;
+nu_minutossessao: 60;
+st_senhacapcha: ;
+st_key: ;

@@ -1,0 +1,51 @@
+.list-media {
+    display: flex;
+    width: 100%;
+    text-align: left;
+    padding: 20px;
+    transition: all .2s ease-in-out;
+    color: #555;
+    margin: 10px auto;
+    border-radius: 5px;
+
+    img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+
+    .img-playlist {
+        width: 100px;
+        height: 100px;
+        position: relative;
+    }
+    
+    .hover-img:hover {
+        opacity: .8;
+    }
+    
+    .hover-img {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        background: #000;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all .2s ease-in;
+    }
+    
+    .hover-img > i {
+        font-size: 2em;
+    }
+    
+
+}
+
+.list-media:hover {
+    background: #333;
+    cursor: pointer;
+    transform: scale(1.01);
+    color: #888;
+}

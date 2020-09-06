@@ -1,0 +1,218 @@
+.container-login {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container-login h1, .container-center h1 {
+  color: #aaa;
+  font-size: 3em;
+  margin: 20px auto;
+  text-align: left;
+}
+
+.loading-spinner {
+  animation: rotation 1s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+.container-login img {
+  width: 100%;
+}
+
+.container-login form {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.container-center {
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.container-center {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 400px;
+  margin: auto;
+}
+
+.input-primary {
+  padding: 15px 5px;
+  margin-top: 10px;
+  border: 0;
+  font-size: 1.1em;
+  border-radius: 5px;
+  background: #333;
+  color: #ddd;
+  width: 100%;
+}
+
+.button-primary {
+  background: #54B25D;
+  color: #fff;
+  cursor: pointer;
+  transition: all .2s linear;
+  padding: 15px 5px;
+  margin-top: 10px;
+  border: 0;
+  font-size: 1.1em;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.button-primary:hover {
+  background: #4A934F;
+}
+
+.button-secundary {
+  background: #555;
+  color: #fff;
+  cursor: pointer;
+  transition: all .2s linear;
+  padding: 15px 5px;
+  margin-top: 10px;
+  border: 0;
+  font-size: 1.1em;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.button-secundary:hover {
+  background: #494949;
+}
+
+.container-login form input, .container-login form button, .btn-connect-spotify button {
+  padding: 15px 5px;
+  margin-top: 10px;
+  border: 0;
+  font-size: 1.1em;
+  border-radius: 5px;
+  background: #333;
+  color: #ddd;
+  width: 100%;
+}
+
+.btn-connect-spotify {
+  width: 400px;
+  display: flex;
+}
+
+.btn-connect-spotify button {
+  width: 100%;
+}
+
+.container-login form button, .btn-connect-spotify button {
+  background: #54B25D;
+  color: #fff;
+  cursor: pointer;
+  transition: all .2s linear;
+}
+
+.button-green {
+  background: #54B25D;
+  color: #fff;
+  cursor: pointer;
+  transition: all .2s linear;
+  padding: 15px 5px;
+  margin-top: 10px;
+  border: 0;
+  font-size: 1.1em;
+  border-radius: 5px;
+  width: 100%;
+
+}
+
+.button-green:hover {
+  background: #4A934F;
+}
+
+.container-login form button:hover {
+  background: #4A934F;
+}
+
+.erro-box {
+  background: #eee;
+  color: #333;
+  padding: 0px 5px;
+  font-size: 1em;
+  width: 400px;
+  border-radius: 5px;
+  margin-top: 10px;
+  text-align: center;
+  height: 0px;
+  overflow: hidden;
+  opacity: 0;
+  transition: all .2s ease-in-out;
+}
+
+.erro-box-show button {
+  margin-top: 5px;
+  background: none;
+  color: #333;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  transition: all .2s ease-out;
+}
+
+.erro-box-show button:hover {
+  color: #555;
+  transform: translateY(-2px);
+}
+
+.erro-box-show {
+  padding: 15px 5px;
+  height: auto;
+  opacity: 1;
+}
+
+.p-login {
+  color: #fff;
+  text-align: left;
+  margin: 20px auto;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.alert-login {
+  background: #eee;
+  color: #333;
+  padding: 15px 5px;
+  font-size: 1em;
+  width: 100%;
+  border-radius: 5px;
+  margin-top: 10px;
+  text-align: center;
+  transition: all .2s ease-in-out;
+}
+
+.group-button-login {
+  display: flex;
+  flex-direction: column;
+}

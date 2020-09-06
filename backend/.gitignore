@@ -1,0 +1,13 @@
+
+.idea/
+
+files/
+Files/
+
+config/Config
+
+App/Model/Espelhos/
+
+vendor/
+
+composer.lock

@@ -1,0 +1,135 @@
+.capa-playlist {
+    height: 300px;
+    overflow: hidden;
+    /* border-radius: 0 0 10px 10px; */
+}
+
+.header-playlist {
+    opacity: 0;
+    margin-top: -300px;
+    transition: all .5s ease-out;
+}
+
+.header-playlist-show {
+    margin-top: 0;
+    opacity: 1;
+}
+
+.capa-playlist-sobre {
+    height: 300px;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    width: 100%;
+    overflow: hidden;
+    /* border-radius: 0 0 10px 10px; */
+}
+
+.playlist-info {
+    position: absolute;
+    height: 300px;
+    top: 0px;
+    color: #fff;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.info-by {
+    margin-top: 5px;
+    font-size: 1.5em;
+}
+
+.playlist-info h1 {
+    font-size: 3em;
+    text-transform: uppercase;
+}
+
+.capa-playlist img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    filter: blur(5px);
+}
+
+.button-actions {
+    display: flex;
+    flex-direction: row;
+    grid-gap: 50px;
+    margin-top: 50px;
+}
+
+.button-actions  button {
+    background: #fff;
+    border: 0;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 300;
+    transition: all .2s ease-in-out; 
+    margin: 0 10px;
+}
+
+.button-actions  button:hover {
+    background: #ddd;
+    box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.5);
+}
+
+.list-playlist {
+    display: flex;
+    flex-direction: column;
+    margin: 20px auto;
+    width: 100%;
+}
+
+.list-playlist ul li img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.list-playlist ul li{
+    display: flex;
+    width: 100%;
+    text-align: left;
+    padding: 20px;
+    transition: all .2s ease-in-out;
+    color: #555;
+    margin: 10px auto;
+    border-radius: 5px;
+}
+
+.list-playlist ul li:hover{
+    background: #333;
+    cursor: pointer;
+    transform: scale(1.01);
+    color: #888;
+
+}
+
+
+.list-playlist-select{
+    background: #333;
+    cursor: pointer;
+    transform: scale(1.01);
+    color: #888 !important;
+    box-shadow: inset 0px 0px 20px rgba(0,0,0,0.9);
+}
+
+.info-music {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    align-content: center;
+    justify-content: center;
+    max-width: 500px;
+}
+
+.info-music >* i{
+    margin: 0 3px;
+}

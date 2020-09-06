@@ -1,0 +1,60 @@
+.header-component-container {
+  height: 60vh;
+  background: #ddd;
+  position: fixed;
+  width: 100vw;
+  z-index: -1;
+  overflow: hidden;
+
+  .content {
+    height: 300px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    padding: 20px;
+    align-items: flex-end;
+    color: #fff;
+    margin-left: 80px;
+
+    h1 {
+      font-size: 3em;
+      margin: 10px 0 5px;
+    }
+
+    h2 {
+      font-size: 1.5em;
+    }
+
+    h4 {
+      margin-top: 10px;
+      font-weight: regular;
+      background: #1fd661;
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 3px;
+    }
+
+  }
+
+  .overlay {
+    height: 100%;
+    width: 100%;
+    background: rgb(34,34,34);
+    background: linear-gradient(0deg, rgba(34,34,34,1) 20%, rgba(34,34,34,0) 100%);
+    position: absolute;
+    bottom: 0px;
+    
+  }
+
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    filter: blur(5px);
+    transform: scale(1.02);
+  }
+
+
+}
