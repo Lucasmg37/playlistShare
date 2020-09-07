@@ -1,4 +1,4 @@
-import { MdHome, MdSearch, MdSettings, MdPlaylistPlay } from 'react-icons/md';
+import { MdHome, MdSearch, MdPlaylistPlay } from 'react-icons/md';
 import { FaSpotify } from 'react-icons/fa';
 
 export const itemsMenu = [
@@ -22,10 +22,5 @@ export const itemsMenu = [
     name: 'Spotify',
     icon: FaSpotify,
     needSpotify: true,
-  },
-  {
-    route: '/perfil',
-    name: 'Perfil',
-    icon: MdSettings,
   },
 ];
