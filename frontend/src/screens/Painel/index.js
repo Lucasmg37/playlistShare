@@ -3,7 +3,6 @@ import React from 'react';
 import '../../css/Main.scss';
 
 import './styles.scss';
-import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 import PrivateRoutes from '../../routes/private';
 
@@ -24,7 +23,6 @@ const Painel = () => {
 
   return (
     <div className="painel-screen-container">
-      <Header />
       <Menu />
       <div className="wrapper">
         <PrivateRoutes />

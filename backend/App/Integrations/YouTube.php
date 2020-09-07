@@ -3,6 +3,7 @@
 namespace App\Integrations;
 
 use App\Business\Musics;
+use App\Constants\System\BdAction;
 use App\Model\Entity\Track;
 use App\Model\Entity\Youtubeapi;
 use App\Model\Model;
@@ -89,5 +90,65 @@ class YouTube
         }
 
         return $musics;
+    }
+
+    public function downloadAll()
+    {
+        $trackEntity = new Track();
+        $tracksTemp = $trackEntity->findAll();
+        $tracks = [];
+
+        foreach ($tracksTemp as $track) {
+            if (!empty($track['yt_id'])) {
+                $tracks[] = $track;
+            }
+        }
+
+
+        if (empty($tracks)) {
+            return 'Sem mídias integradas com o YouTube';
+        }
+
+        if (!is_dir('../Files')) {
+            mkdir('../Files');
+        }
+
+        $result = [];
+
+        foreach ($tracks as $track) {
+
+            $yt_id = $track["yt_id"];
+
+            if (is_file("../Files/$yt_id.mp3")) {
+                continue;
+            }
+
+            $file = fopen("http://yt-convert-service:80//download/$yt_id.mp3", 'r');
+
+            if ($file) {
+                file_put_contents("../Files/$yt_id.mp3", $file);
+                $result['success'][] = $yt_id;
+                continue;
+            }
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_URL, 'http://yt-convert-service:80/convert.php?youtubelink=https://www.youtube.com/watch?v=' . $yt_id . '&format=mp3');
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            $response = curl_exec($ch);
+            $response = json_decode($response);
+
+            $file = $response->file;
+
+            if ($response->error || !$file) {
+                $result['error'][] = $yt_id;
+                continue;
+            }
+
+            file_put_contents("../Files/$yt_id.mp3", fopen($file, 'r'));
+            $result['success'][] = $yt_id;
+        }
+
+        return $result;
     }
 }

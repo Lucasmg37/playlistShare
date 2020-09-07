@@ -5,7 +5,7 @@ namespace App\Routes;
 use Bootstrap\Router;
 use Exception;
 
-Class Route
+class Route
 {
 
     /**
@@ -47,13 +47,14 @@ Class Route
 
         $this->router->setNewRoute("GET", "Music", "getTopTracksUser");
 
+        $this->router->setNewRoute("GET", "Converter", "downloadAll");
+
         $this->router->setNewRoute("GET", "Player", "getCurrent");
         $this->router->setNewRoute("PUT", "Player", "playTrack");
         $this->router->setNewRoute("PUT", "Player", "playPlaylist");
 
         $this->router->setNewRoute("POST", "Login", "bySpotify");
         $this->router->setNewRoute("POST", "Signup", "bySpotify");
-
     }
 
     /**
@@ -103,5 +104,4 @@ Class Route
     {
         return $this->router;
     }
-
 }

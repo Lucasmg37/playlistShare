@@ -12,9 +12,7 @@ const Menu = () => {
         {itemsMenu.map(item => {
           return (
             <NavLink to={item.route}>
-              <li>
-                {item.icon()} <span>{item.name}</span>
-              </li>
+              <li>{item.icon()}</li>
             </NavLink>
           );
         })}
