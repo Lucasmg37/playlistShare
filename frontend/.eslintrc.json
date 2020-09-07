@@ -49,18 +49,6 @@
           "js": "never",
           "jsx": "never"
         }
-      ],
-      "import-helpers/order-imports": [
-        "warn",
-        {
-          "newlinesBetween": "always",
-          "groups": [
-            ["/^react$/", "module"],
-            ["parent"],
-            ["sibling", "index"]
-          ],
-          "alphabetize": { "order": "ignore", "ignoreCase": true }
-        }
       ]
     }
   }
