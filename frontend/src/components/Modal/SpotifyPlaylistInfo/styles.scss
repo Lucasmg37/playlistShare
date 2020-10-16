@@ -1,0 +1,142 @@
+.SpotifyPlaylistInfoContainer {
+  height: 70vh;
+  overflow: hidden;
+  display: flex;
+  padding: 24px;
+
+  aside {
+    display: flex;
+    flex-direction: column;
+
+    header {
+      display: flex;
+      flex-direction: column;
+      color: #fff;
+      margin-bottom: 24px;
+      max-width: 350px;
+
+      & > div {
+        height: 320px;
+        width: 320px;
+        position: relative;
+
+        button {
+          background: #63c38d;
+          width: 70px;
+          height: 70px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.5em;
+          cursor: pointer;
+          transition: all ease-out 0.2s;
+          border: none;
+          color: #fff;
+
+          position: absolute;
+          right: -16px;
+          bottom: -16px;
+
+          &:hover {
+            transform: scale(1.2);
+          }
+        }
+      }
+
+      img {
+        height: 320px;
+        width: 320px;
+        object-fit: cover;
+        border-radius: 16px;
+      }
+
+      h1 {
+        font-size: 48px;
+        margin-top: 8px;
+      }
+
+      h2 {
+        font-size: 24px;
+        font-weight: normal;
+        margin-top: 16px;
+      }
+
+      h3 {
+        font-size: 16px;
+        font-weight: lighter;
+        margin-top: 8px;
+      }
+    }
+
+    footer {
+      display: flex;
+      margin-top: auto;
+      padding-bottom: 24px;
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        width: 48px;
+        height: 48px;
+        font-size: 1.2em;
+        border-radius: 50%;
+        cursor: pointer;
+        opacity: 0.5;
+        margin-right: 8px;
+        transition: all ease 0.2s;
+        color: #070719;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+    overflow: auto;
+    padding: 0 0 0 24px;
+
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+
+    .listTracksSpotify {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+
+      li {
+        display: flex;
+        padding: 8px;
+        background: #101022;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        align-items: center;
+        color: #fff;
+
+        img {
+          height: 80px;
+          border-radius: 8px;
+          margin-right: 16px;
+        }
+
+        h1 {
+          font-size: 20px;
+        }
+
+        h2 {
+          font-size: 18px;
+          font-weight: normal;
+        }
+      }
+    }
+  }
+}

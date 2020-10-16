@@ -5,6 +5,7 @@ namespace App\Util;
 
 
 use App\Model\Model;
+use App\Model\Response;
 use Bootstrap\Config;
 use Exception;
 use Firebase\JWT\ExpiredException;
@@ -62,6 +63,7 @@ class JWT
         try {
             return (array)\Firebase\JWT\JWT::decode($token, $this->key, array($this->algoritimo));
         } catch (ExpiredException $e) {
+            Response::unauthorizedResponse("Token expirado!");
             throw new Exception("Token expirado!");
         }
     }

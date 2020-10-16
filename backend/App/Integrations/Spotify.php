@@ -13,7 +13,6 @@ use App\Transformer\PlayerSpotify;
 use App\Transformer\PlaylistSpotify;
 use App\Transformer\TrackSpotify;
 use App\Transformer\UsuarioSpotify;
-use App\Util\Debug;
 use App\Util\Helper;
 use Bootstrap\Config;
 use Exception;
@@ -60,9 +59,9 @@ class Spotify
     public function getEndPoint($endpoint, $id = null)
     {
         switch ($endpoint) {
-            case self::END_POINT_PLAYLIST_USER :
+            case self::END_POINT_PLAYLIST_USER:
                 return self::END_POINT_USER . "/$id/" . self::END_POINT_PLAYLIST_USER;
-            case self::END_POINT_PLAYLIST_TRACKS :
+            case self::END_POINT_PLAYLIST_TRACKS:
                 return self::END_POINT_PLAYLIST . "/$id/" . self::END_POINT_PLAYLIST_TRACKS;
         }
 
@@ -96,11 +95,9 @@ class Spotify
             $this->refresher_token = $integracao->getStRefreshtoken();
 
             $this->getAcessTokenUserByRefresherToken();
-
         } else {
             $this->getTokenAcessApplication();
         }
-
     }
 
     /**
@@ -128,7 +125,6 @@ class Spotify
         $data["position_ms"] = 0;
 
         return $this->play($data);
-
     }
 
     /**
@@ -144,7 +140,6 @@ class Spotify
         $data["position_ms"] = 0;
 
         return $this->play($data);
-
     }
 
     /**
@@ -279,7 +274,7 @@ class Spotify
         $this->webservice->setHeader($this->getHeaderApplication());
         $this->webservice->setEndpoint(self::END_POINT_ME);
 
-        if ($id_user){
+        if ($id_user) {
             $this->webservice->setEndpoint(self::END_POINT_USER_INFO . "/" . $id_user);
         }
 
@@ -314,7 +309,8 @@ class Spotify
 
             $this->webservice->setHeader($this->getHeaderApplication());
             $this->webservice->setEndpoint(
-                $this->getEndPoint(self::END_POINT_PLAYLIST_TRACKS, $id_playlist) . Helper::arrayToQuery($paramsPesquisa));
+                $this->getEndPoint(self::END_POINT_PLAYLIST_TRACKS, $id_playlist) . Helper::arrayToQuery($paramsPesquisa)
+            );
 
             $tracks = $this->isError($this->webservice->get());
 
@@ -336,11 +332,9 @@ class Spotify
             foreach ($tracks->items as $track) {
                 $retorno[] = TrackSpotify::getSimpleDataTrack($track->track);
             }
-
         } while (true);
 
         return $retorno;
-
     }
 
     /**
@@ -388,7 +382,6 @@ class Spotify
         }
 
         return $retorno;
-
     }
 
     /**
@@ -426,7 +419,8 @@ class Spotify
         do {
             $this->webservice->setHeader($this->getHeaderApplication());
             $this->webservice->setEndpoint(
-                $this->getEndPoint(self::END_POINT_PLAYLIST_USER, $this->integracao->getStId()) . Helper::arrayToQuery($paramsPesquisa));
+                $this->getEndPoint(self::END_POINT_PLAYLIST_USER, $this->integracao->getStId()) . Helper::arrayToQuery($paramsPesquisa)
+            );
             $playlists = $this->isError($this->webservice->get());
 
             if (!$all || empty($playlists->next)) {
@@ -444,7 +438,6 @@ class Spotify
             foreach ($playlists->items as $playlist) {
                 $retorno[] = PlaylistSpotify::getSimpleDataPlaylist($playlist);
             }
-
         } while (true);
 
         return $retorno;
@@ -460,7 +453,7 @@ class Spotify
         $data = [
             "name" => $playlist->getStNome(),
             "public" => !$playlist->getBlPrivada(),
-            "collaborative" => (boolean)$playlist->getBlPublicedit(),
+            "collaborative" => (bool)$playlist->getBlPublicedit(),
             "description" => $playlist->getStDescricao()
         ];
 
@@ -483,7 +476,7 @@ class Spotify
         $data = [
             "name" => $playlist->getStNome(),
             "public" => !$playlist->getBlPrivada(),
-            "collaborative" => (boolean)$playlist->getBlPublicedit(),
+            "collaborative" => (bool)$playlist->getBlPublicedit(),
             "description" => $playlist->getStDescricao()
         ];
 
@@ -532,7 +525,7 @@ class Spotify
      * @return mixed
      * @throws Exception
      */
-    private function getTokenAcessUserByCode()
+    public function getTokenAcessUserByCode()
     {
         $post_data = [
             "grant_type" => "authorization_code",
@@ -579,7 +572,6 @@ class Spotify
 
         $this->access_token = $result->access_token;
         return $this;
-
     }
 
 
@@ -605,7 +597,6 @@ class Spotify
                     throw new Exception($response->error->message);
                     break;
             }
-
         } else if (isset($response->error) && $response->error_description) {
             switch ($response->error) {
                 case "invalid_client":
@@ -615,7 +606,6 @@ class Spotify
                     throw new Exception("Código de autorização expirado!");
                     break;
             }
-
         } else if (isset($response->error)) {
             throw new Exception("Erro de integração não identificado!");
         }
@@ -645,5 +635,4 @@ class Spotify
     {
         $this->refresher_token = $refresher_token;
     }
-
 }

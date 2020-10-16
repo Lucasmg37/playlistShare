@@ -1,0 +1,72 @@
+.SearchTrackContainer {
+  width: 50vw;
+  display: block;
+  padding: 24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-height: 80vh;
+  min-height: 50vh;
+
+  & > div {
+    flex: 1;
+    height: 100%;
+    overflow-x: hidden;
+    padding: 8px;
+    margin-top: 16px;
+
+    &::-webkit-scrollbar-track {
+      background-color: #070719;
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #101022;
+    }
+  }
+
+  .input {
+    border: 1px solid #fff;
+    width: 100%;
+    border-radius: 32px;
+    padding: 0 16px;
+    display: flex;
+    font-size: 24px;
+    color: #fff;
+    align-items: center;
+
+    button {
+      display: flex;
+      align-items: center;
+      background: none;
+      border: none;
+      font-size: 24px;
+      margin: auto 8px;
+      color: #fff;
+
+      &:first-child {
+        opacity: 0.5;
+        cursor: pointer;
+        transition: all ease-in 0.2s;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
+    input {
+      background: none;
+      flex: 1;
+      border: none;
+      padding: 16px;
+      font-size: 24px;
+      color: #fff;
+    }
+  }
+}

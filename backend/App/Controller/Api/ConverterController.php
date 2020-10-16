@@ -13,7 +13,7 @@ class ConverterController extends Controller
     public function getAction($id)
     {
         $youtube = new YouTube();
-        // return $youtube->getListVideoYoutube($id);
+        return $youtube->getListVideoYoutube($id);
     }
 
     public function downloadAllAction()

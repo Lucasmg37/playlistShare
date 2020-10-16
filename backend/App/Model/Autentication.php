@@ -8,7 +8,7 @@ use Bootstrap\Config;
 use Bootstrap\Router;
 use Exception;
 
-Class Autentication extends Model
+class Autentication extends Model
 {
     private $autenticado = false;
     private $config;
@@ -58,7 +58,6 @@ Class Autentication extends Model
 
             self::aplicaRegraSessao();
             return true;
-
         } catch (Exception $e) {
             if ($lancaErro) {
                 throw new Exception($e->getMessage());
@@ -89,7 +88,7 @@ Class Autentication extends Model
 
     /**
      * Método chamado antes de realizar as ações da Controller
-     * Se o seu retorno é false, a ação não será chamda resultando em um erro
+     * Se o seu retorno é false, a ação não será chamada resultando em um erro
      * @param $router Router
      * @return bool
      */
@@ -97,5 +96,4 @@ Class Autentication extends Model
     {
         return true;
     }
-
 }

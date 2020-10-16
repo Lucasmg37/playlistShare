@@ -3,6 +3,7 @@
 
 namespace App\Model;
 
+use App\Util\Debug;
 
 class WebService
 {
@@ -166,5 +167,4 @@ class WebService
 
         return $response;
     }
-
 }

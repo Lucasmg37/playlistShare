@@ -5,6 +5,8 @@ import '../../css/Main.scss';
 import './styles.scss';
 import Menu from '../../components/Menu';
 import PrivateRoutes from '../../routes/private';
+import PlayerYoutube from '../../components/PlayerYoutube';
+import PlayerSpotify from '../../components/PlayerSpotify';
 
 const Painel = () => {
   // async function getCurrentPlayer() {
@@ -22,7 +24,9 @@ const Painel = () => {
   // }
 
   return (
-    <div className="painel-screen-container">
+    <div className="PainelContainer">
+      <PlayerYoutube />
+      <PlayerSpotify />
       <Menu />
       <div className="wrapper">
         <PrivateRoutes />

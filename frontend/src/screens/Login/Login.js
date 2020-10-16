@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import LoginService from '../../services/LoginService';
 import UsuarioService from '../../services/UsuarioService';
@@ -12,24 +12,29 @@ import './Login.scss';
 import { useAuth } from '../../hooks/auth';
 
 export default function Login() {
-  const { signIn, user } = useAuth();
+  const { signIn, user, signInSpotify } = useAuth();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const [logging, setLogging] = useState(false);
   const [alert, setAlert] = useState('');
+  const history = useHistory();
 
-  function loginBySpotifySuccess(code) {
-    LoginService.loginBySpotify(code)
-      .then(response => {
-        localStorage.setItem('st_token', response.data.st_token);
-        window.location.href = 'http://localhost:3000';
-      })
-      .catch(error => {
-        setAlert(error.message);
-      });
-  }
+  const loginBySpotifySuccess = async code => {
+    setLogging(true);
+    try {
+      await signInSpotify(code);
+      history.push('/');
+    } catch (err) {
+      setAlert(err.message);
+      if (err.data) {
+        setAlert('');
+      }
+    } finally {
+      setLogging(false);
+    }
+  };
 
   function activateAccount(code) {
     setLogging(true);
@@ -64,13 +69,12 @@ export default function Login() {
     }
   }, []);
 
-  // lucas@lucasjunior.com.br
-
   const login = async e => {
     e.preventDefault();
     setLogging(true);
     try {
       await signIn(username, password);
+      history.push('/');
     } catch (err) {
       setAlert(err.message);
       if (err.data) {
@@ -105,11 +109,7 @@ export default function Login() {
             />
 
             <button className="button-primary" type="submit">
-              {!logging ? (
-                <span>Entrar</span>
-              ) : (
-                <i className="fa fa-spinner loading-spinner fa-2x" />
-              )}
+              {!logging ? <span>Entrar</span> : <i className="fa fa-spinner loading-spinner fa-2x" />}
             </button>
           </form>
 
@@ -146,11 +146,7 @@ export default function Login() {
             buttonAction={code => activateAccount(code)}
           />
 
-          <button
-            type="button"
-            onClick={() => sendActivateEmail()}
-            className="button-secundary"
-          >
+          <button type="button" onClick={() => sendActivateEmail()} className="button-secundary">
             Receber novo código
           </button>
 

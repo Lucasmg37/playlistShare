@@ -70,7 +70,6 @@ class Usuario
         $usuario = new Usuarios();
         $usuario->findOne($integracao->getIdUsuario());
         return $usuario;
-
     }
 
     /**
@@ -80,6 +79,12 @@ class Usuario
     public static function getUserLogged()
     {
         $jwt = new JWT();
+        $token = Token::getTokenByAuthorizationHeader();
+
+        if (!$token) {
+            Response::unauthorizedResponse("Token de acesso não encontrado!");
+        }
+
         $data = $jwt->getDataToken(Token::getTokenByAuthorizationHeader());
         $usuario = new Usuarios();
         $usuario->findOne($data["userid"]);
@@ -136,7 +141,6 @@ class Usuario
         $usuarioEntity->insert();
 
         return $usuarioEntity;
-
     }
 
     /**
@@ -162,8 +166,5 @@ class Usuario
         $retorno["bl_integracao"] = $integracao && !empty($integracao->getStId()) ? 1 : 0;
 
         return $retorno;
-
-
     }
-
 }

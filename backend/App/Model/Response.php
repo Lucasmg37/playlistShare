@@ -12,6 +12,7 @@ class Response
     const TYPE_REQUEST_SUCCESS = 'success';
 
     const CODE_400_BAD_REQUEST = 'HTTP/1.1 400 Bad Request';
+    const CODE_401 = 'HTTP/1.1 401 Unauthorized';
     const CODE_200_OK = 'HTTP/1.1 200 OK';
 
     private $httpCode = self::CODE_200_OK;
@@ -55,7 +56,6 @@ class Response
     {
         $response = new Response(self::CODE_400_BAD_REQUEST, self::TYPE_REQUEST_ERROR, false, $message, $data, $errorCode);
         $response->responseReturn();
-
     }
 
 
@@ -66,6 +66,16 @@ class Response
     public static function succesResponse($message = null, $data = [])
     {
         $response = new Response(self::CODE_200_OK, self::TYPE_REQUEST_SUCCESS, true, $message, $data, null);
+        $response->responseReturn();
+    }
+
+    /**
+     * @param null $message
+     * @param array $data
+     */
+    public static function unauthorizedResponse($message = null, $data = [])
+    {
+        $response = new Response(self::CODE_401, self::TYPE_REQUEST_ERROR, true, $message, $data, null);
         $response->responseReturn();
     }
 
@@ -146,6 +156,4 @@ class Response
     {
         return $this->errorCode;
     }
-
-
 }

@@ -1,0 +1,53 @@
+.ModalContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  .Content {
+    background: #070719;
+    z-index: 1000;
+    border-radius: 16px;
+    width: 50vw;
+    display: block;
+  }
+
+  .Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #222222ce;
+    height: 100vh;
+    width: 100vw;
+    z-index: 999;
+  }
+
+  .buttonCloseModal {
+    height: 54px;
+    width: 54px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    position: absolute;
+    right: -16px;
+    top: -16px;
+    background: #101022;
+    transition: all ease-in 0.2s;
+
+    &:hover {
+      background: #fff;
+      color: #101022;
+    }
+  }
+}

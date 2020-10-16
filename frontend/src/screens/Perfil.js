@@ -10,9 +10,7 @@ export default function Perfil(props) {
   const [id_config, setId_config] = useState('');
   const [bl_atualizaspotify, setBl_atualizaspotify] = useState(false);
   const [bl_buscamudancasspotify, setBl_buscamudancasspotify] = useState(false);
-  const [bl_deleteplaylistspotify, setBl_deleteplaylistspotify] = useState(
-    false,
-  );
+  const [bl_deleteplaylistspotify, setBl_deleteplaylistspotify] = useState(false);
 
   useEffect(() => {
     async function verificaIntegracao() {
@@ -21,9 +19,7 @@ export default function Perfil(props) {
         setBl_atualizaspotify(response.data.data.bl_atualizaspotify);
         setId_config(response.data.data.id_config);
         setBl_buscamudancasspotify(response.data.data.bl_buscamudancasspotify);
-        setBl_deleteplaylistspotify(
-          response.data.data.bl_deleteplaylistspotify,
-        );
+        setBl_deleteplaylistspotify(response.data.data.bl_deleteplaylistspotify);
       });
     }
 
@@ -80,40 +76,28 @@ export default function Perfil(props) {
           <div className="input-toggle">
             <Toggle
               name="bl_sincronizaclone"
-              onChangeFunction={() =>
-                setBl_sincronizaclone(!bl_sincronizaclone)
-              }
+              onChangeFunction={() => setBl_sincronizaclone(!bl_sincronizaclone)}
               checked={bl_sincronizaclone}
             />
-            <label htmlFor="bl_sincronizaclone">
-              Sincronizar playlists clonadas automáticamente.
-            </label>
+            <label htmlFor="bl_sincronizaclone">Sincronizar playlists clonadas automáticamente.</label>
           </div>
 
           <div className="input-toggle">
             <Toggle
               name="bl_atualizaspotify"
-              onChangeFunction={() =>
-                setBl_atualizaspotify(!bl_atualizaspotify)
-              }
+              onChangeFunction={() => setBl_atualizaspotify(!bl_atualizaspotify)}
               checked={bl_atualizaspotify}
             />
-            <label htmlFor="bl_atualizaspotify">
-              Atualizar playlists sincronizadas do spotify automáticamente
-            </label>
+            <label htmlFor="bl_atualizaspotify">Atualizar playlists sincronizadas do spotify automáticamente</label>
           </div>
 
           <div className="input-toggle">
             <Toggle
               name="bl_buscamudancasspotify"
-              onChangeFunction={() =>
-                setBl_buscamudancasspotify(!bl_buscamudancasspotify)
-              }
+              onChangeFunction={() => setBl_buscamudancasspotify(!bl_buscamudancasspotify)}
               checked={bl_buscamudancasspotify}
             />
-            <label htmlFor="bl_buscamudancasspotify">
-              Buscar mudanças em playlists do spotify automáticamente
-            </label>
+            <label htmlFor="bl_buscamudancasspotify">Buscar mudanças em playlists do spotify automáticamente</label>
           </div>
 
           {/* <div className="input-toggle"> */}
@@ -126,20 +110,12 @@ export default function Perfil(props) {
           {/* </div> */}
 
           <div>
-            <button
-              onClick={desconectSpotify}
-              type="button"
-              className="desconect-spotify"
-            >
+            <button onClick={desconectSpotify} type="button" className="desconect-spotify">
               Desconectar Spotify
             </button>
           </div>
           <div>
-            <button
-              type="button"
-              onClick={saveConfigsIntegracao}
-              className="button-primary"
-            >
+            <button type="button" onClick={saveConfigsIntegracao} className="button-primary">
               Salvar configurações
             </button>
           </div>

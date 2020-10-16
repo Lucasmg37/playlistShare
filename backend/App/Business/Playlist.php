@@ -5,6 +5,7 @@ namespace App\Business;
 
 
 use App\Integrations\Spotify;
+use App\Model\Entity\Like;
 use App\Model\Entity\VwPlaylist;
 use App\Model\Model;
 use App\Model\Validate;
@@ -45,6 +46,24 @@ class Playlist
             throw new Exception("Você não tem permissões para visualizar esta playlist!");
         }
 
+        // User liked this playlist
+        if (+$playlist->getIdUsuario() === +$id_usuario) {
+            $likeEntity = new Like();
+            $likeEntity->setUserId($id_usuario);
+            $likeEntity->setActive(1);
+            $likeEntity->setPlaylistId($id_playlist);
+            $likeEntity->findAndMount();
+            $playlist->has_user_like = false;
+            if ($likeEntity->getId()) {
+                $playlist->has_user_like = true;
+            }
+        }
+
+        if (!$playlist->getHasOwnerPlatform()) {
+            $playlist->setStNomeusuario($playlist->getStNameownerspotify());
+            $playlist->setIdUsuario(null);
+        }
+
         return $playlist;
     }
 
@@ -74,7 +93,6 @@ class Playlist
         $playlist->validate(Validate::PLAYLIST, array(), null, false);
         $playlist->save();
         return $playlist;
-
     }
 
     /**
@@ -103,7 +121,6 @@ class Playlist
 
         $playlist->save();
         return $playlist;
-
     }
 
     /**
@@ -130,7 +147,6 @@ class Playlist
         }
 
         return true;
-
     }
 
     /**
@@ -170,7 +186,6 @@ class Playlist
         $playlistEntity->save();
 
         return $playlistEntity;
-
     }
 
     /**
@@ -208,7 +223,6 @@ class Playlist
                     $possui = true;
                     break;
                 }
-
             }
 
             //A música existe na origem, mas não no destino
@@ -218,7 +232,6 @@ class Playlist
                     "st_urispotify" => $musicaOrigem["st_urispotify"],
                 ];
             }
-
         }
 
         foreach ($destino as $musicaDestino) {
@@ -229,7 +242,6 @@ class Playlist
                     $possui = true;
                     break;
                 }
-
             }
 
             //A música existe no destino, mas não na origem
@@ -239,9 +251,7 @@ class Playlist
                     "id_spotify" => $musicaDestino["id_spotify"],
                     "st_urispotify" => $musicaDestino["st_urispotify"],
                 ];
-
             }
-
         }
 
         $retorno["differences_list"] = $add;
@@ -249,5 +259,4 @@ class Playlist
 
         return $retorno;
     }
-
 }

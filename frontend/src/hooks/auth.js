@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  useEffect,
-  useCallback,
-  useContext,
-} from 'react';
+import React, { createContext, useState, useEffect, useCallback, useContext } from 'react';
 
 import LoginService from '../services/LoginService';
 
@@ -35,7 +29,22 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('@GROUPLISTAuth:user', JSON.stringify(data));
       setUser(data);
       setSigned(true);
-      return true;
+    } catch (err) {
+      const { data } = err;
+      if (data) {
+        setUser(data);
+      }
+      throw err;
+    }
+  }, []);
+
+  const signInSpotify = useCallback(async code => {
+    try {
+      const { data } = await LoginService.loginBySpotify(code);
+      localStorage.setItem('@GROUPLISTAuth:token', data.st_token);
+      localStorage.setItem('@GROUPLISTAuth:user', JSON.stringify(data));
+      setUser(data);
+      setSigned(true);
     } catch (err) {
       const { data } = err;
       if (data) {
@@ -58,6 +67,7 @@ export const AuthProvider = ({ children }) => {
         user,
         signIn,
         signOut,
+        signInSpotify,
       }}
     >
       {children}

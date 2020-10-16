@@ -124,6 +124,24 @@ class Playlist extends BdAction
     public $bl_sincronizar;
 
 
+    /**
+     * @var $st_idownerspotify
+     */
+    public $st_idownerspotify;
+
+
+    /**
+     * @var $st_nameownerspotify
+     */
+    public $st_nameownerspotify;
+
+
+    /**
+     * @var $dt_updatespotify
+     */
+    public $dt_updatespotify;
+
+
 
     /**
      * @return int
@@ -248,6 +266,33 @@ class Playlist extends BdAction
     public function getBlSincronizar()
     {
         return $this->bl_sincronizar;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getStIdownerspotify()
+    {
+        return $this->st_idownerspotify;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getStNameownerspotify()
+    {
+        return $this->st_nameownerspotify;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getDtUpdatespotify()
+    {
+        return $this->dt_updatespotify;
     }
 
 
@@ -388,6 +433,36 @@ class Playlist extends BdAction
     public function setBlSincronizar($bl_sincronizar)
     {
         $this->bl_sincronizar = $bl_sincronizar;
+        $this->atualizaAtributos($this);
+    }
+
+
+    /**
+     * @param string $st_idownerspotify
+     */
+    public function setStIdownerspotify($st_idownerspotify)
+    {
+        $this->st_idownerspotify = $st_idownerspotify;
+        $this->atualizaAtributos($this);
+    }
+
+
+    /**
+     * @param string $st_nameownerspotify
+     */
+    public function setStNameownerspotify($st_nameownerspotify)
+    {
+        $this->st_nameownerspotify = $st_nameownerspotify;
+        $this->atualizaAtributos($this);
+    }
+
+
+    /**
+     * @param string $dt_updatespotify
+     */
+    public function setDtUpdatespotify($dt_updatespotify)
+    {
+        $this->dt_updatespotify = $dt_updatespotify;
         $this->atualizaAtributos($this);
     }
 

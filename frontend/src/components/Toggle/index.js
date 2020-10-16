@@ -1,22 +1,12 @@
 import React from 'react';
-import './Toggle.css';
+import './Toggle.scss';
 
-export default function Toggle({ checked, name, onChangeFunction }) {
-  function changeFunction() {
-    onChangeFunction();
-  }
-
+export default function Toggle({ children, checked = false, onChange }) {
   return (
-    <div>
-      <label htmlFor className="switch">
-        <input
-          id={name}
-          type="checkbox"
-          onChange={changeFunction}
-          checked={checked}
-        />
-        <span className="slider round" />
-      </label>
+    <div className="toggleContainer">
+      {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+      <button type="button" className={!!checked && 'active'} onClick={onChange} />
+      <span>{children}</span>
     </div>
   );
 }

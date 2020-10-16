@@ -9,10 +9,10 @@ use App\Model\Render;
 use App\Model\Request;
 use App\Model\Response;
 
-Class Controller
+class Controller
 {
     /**
-     * @var $request Request
+     * @var Request $request 
      */
     public $request;
     public $model;
@@ -137,5 +137,4 @@ Class Controller
     {
         Response::failResponse("Método não implementado.");
     }
-
 }

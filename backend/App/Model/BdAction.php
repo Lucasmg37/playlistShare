@@ -108,7 +108,6 @@ class BdAction
         $sql = "DELETE FROM " . $this->getTabela() . " WHERE " . $this->getPrimaryKey() . " = " . $value_primary_key;
         $this->execute($sql);
         return true;
-
     }
 
     /**
@@ -128,7 +127,6 @@ class BdAction
             ? $this->getModel()->bd->lastInsertId()
             : $this->getValuePrimayKey());
         return $this;
-
     }
 
     /**
@@ -166,7 +164,6 @@ class BdAction
 
         $this->execute($sql, $parameters);
         return $this->findOne($value_primary_key);
-
     }
 
     /**
@@ -181,7 +178,6 @@ class BdAction
         }
 
         return $this->update();
-
     }
 
 
@@ -203,7 +199,6 @@ class BdAction
 
         if (sizeof($parameters) > 0) {
             $sql = "SELECT * FROM " . $this->getTabela() . " WHERE " . $where;
-
         }
 
         $result = $this->getResult($this->execute($sql, $parameters));
@@ -468,6 +463,7 @@ class BdAction
     private function getReferencesArray($array)
     {
         foreach ($array as &$item) {
+            $this->clearObject();
             $this->getReference($item);
             $item = $this;
         }
@@ -502,14 +498,13 @@ class BdAction
         } catch (Exception $e) {
             throw $e;
         }
-
     }
 
     /**
      * @param $atributos
      * @throws Exception
      */
-    private function getReference($atributos)
+    private function getReference($atributos, $first = true)
     {
         $this->clearObject();
         $this->mount($atributos);
@@ -522,12 +517,16 @@ class BdAction
             /**
              * @var $obj BdAction
              */
-            $obj = new  $nameClasse();
-            $resultObj = $obj->findOneReference($valuePrimary);
+            $obj = new  $nameClasse([$array["column"] => $valuePrimary]);
+
+            if ($first) {
+                $resultObj = $obj->findReference()[0];
+            } else {
+                $resultObj = $obj->findReference();
+            }
+
             $this->$attr = $resultObj;
-
         }
-
     }
 
     /**
@@ -573,9 +572,9 @@ class BdAction
         if (is_array($arrayWhere)) {
             foreach ($arrayWhere as $key => $value) {
                 switch ($value) {
-                    case \App\Constants\System\BdAction::WHERE_LIKE :
-                    case \App\Constants\System\BdAction::WHERE_LIKE_L :
-                    case \App\Constants\System\BdAction::WHERE_LIKE_R :
+                    case \App\Constants\System\BdAction::WHERE_LIKE:
+                    case \App\Constants\System\BdAction::WHERE_LIKE_L:
+                    case \App\Constants\System\BdAction::WHERE_LIKE_R:
                         if ($value === \App\Constants\System\BdAction::WHERE_LIKE) {
                             $where[] = $key . " " . \App\Constants\System\BdAction::WHERE_LIKE . " :$key";
                             $parameter[$key] = "%" . $this->getFilho()->$key . "%";
@@ -603,7 +602,7 @@ class BdAction
                         break;
 
                     case \App\Constants\System\BdAction::WHERE_IN:
-                        $where[] = $key . " " . \App\Constants\System\BdAction::WHERE_IN . "( ". implode(",", $this->getFilho()->$key)." )";
+                        $where[] = $key . " " . \App\Constants\System\BdAction::WHERE_IN . "( " . implode(",", $this->getFilho()->$key) . " )";
                 }
             }
         }
@@ -677,7 +676,6 @@ class BdAction
             "fields" => $fields,
             "values" => $values
         ];
-
     }
 
     /**
@@ -704,7 +702,6 @@ class BdAction
             } else {
                 $parameters[$attr] = $valor;
             }
-
         }
         return $parameters;
     }
@@ -837,7 +834,6 @@ class BdAction
         $this->dataBdAction["foreign_key"] = $this->getForeignKeysDoc($docs);
         $this->dataBdAction["required"] = $this->getRequiredsDoc($docs);
         $this->dataBdAction["auto_increment"] = $this->getAutoIncrementDoc($docs);
-
     }
 
     /**
@@ -861,7 +857,6 @@ class BdAction
             if (DocsTools::isExistsParameter("primary_key", $arrayDocs)) {
                 return $key;
             }
-
         }
 
         return null;
@@ -905,12 +900,13 @@ class BdAction
 
             //Tratar DOCS
             $arrayDocs = DocsTools::docsToArray($docs[$key]);
-            if (DocsTools::isExistsParameter("required", $arrayDocs)
+            if (
+                DocsTools::isExistsParameter("required", $arrayDocs)
                 && !DocsTools::isExistsParameter("auto_increment", $arrayDocs)
-                && !DocsTools::isExistsParameter("default", $arrayDocs)) {
+                && !DocsTools::isExistsParameter("default", $arrayDocs)
+            ) {
                 $required[] = $key;
             }
-
         }
 
         return $required;
@@ -927,7 +923,6 @@ class BdAction
             if (DocsTools::isExistsParameter("auto_increment", $arrayDocs)) {
                 $autoIncrement[] = $key;
             }
-
         }
 
         return $autoIncrement;
@@ -946,7 +941,6 @@ class BdAction
 
         $arrayDocs = DocsTools::docsToArray($docsClasse);
         $this->dataBdAction["tabela"] = DocsTools::getSimpleParameterDocs("table", $arrayDocs);
-
     }
 
     /**
@@ -1016,10 +1010,8 @@ class BdAction
             }
 
             return $action;
-
         } catch (PDOException $e) {
             throw new Exception($e->getMessage());
         }
     }
-
 }

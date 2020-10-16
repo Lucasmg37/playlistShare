@@ -7,7 +7,7 @@ const ApiService = axios.create({
 });
 
 ApiService.interceptors.request.use(async config => {
-  const userToken = await localStorage.getItem('st_token');
+  const userToken = await localStorage.getItem('@GROUPLISTAuth:token');
 
   if (userToken) {
     config.headers = { Authorization: `Bearer ${userToken}` };
@@ -19,6 +19,11 @@ ApiService.interceptors.request.use(async config => {
 ApiService.interceptors.response.use(
   response => response.data,
   error => {
+    if (error.response && error.response.status === 401) {
+      localStorage.clear();
+      window.location.pathname = '/login';
+      return;
+    }
     throw (error.response || error.request).data;
   },
 );

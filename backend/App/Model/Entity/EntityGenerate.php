@@ -89,12 +89,10 @@ class EntityGenerate
                 if (!empty($linha) || $linha !== "") {
                     $linha = $tab . $linha;
                 }
-
             }
 
             $final = implode(App::BREAK_LINE, $final);
             $genereted[] = $this->generateFile($this->getNameClasse($table), $final, "../App/Model/Entity/");
-
         }
 
         return $genereted;
@@ -172,13 +170,20 @@ class EntityGenerate
         if (strstr($table["name"], "vw_")) {
             $name = substr($table["name"], 3);
             $name = "Vw" . ucfirst($name);
-            return $name;
+        } else {
+            $name = substr($table["name"], 3);
+            $name = ucfirst($name);
         }
 
-        $name = substr($table["name"], 3);
-        $name = ucfirst($name);
-        return $name;
+        $finalName = "";
 
+        $parts = explode("_", $name);
+
+        foreach ($parts as $part) {
+            $finalName = $finalName . ucfirst($part);
+        }
+
+        return $finalName;
     }
 
     /**
@@ -217,7 +222,6 @@ class EntityGenerate
             $text[] = "}";
             $text[] = "";
             $text[] = "";
-
         }
 
         return $text;
@@ -253,11 +257,9 @@ class EntityGenerate
             $text[] = "}";
             $text[] = "";
             $text[] = "";
-
         }
 
         return $text;
-
     }
 
     /**
@@ -301,7 +303,6 @@ class EntityGenerate
         }
 
         return $text;
-
     }
 
     /**
@@ -334,9 +335,7 @@ class EntityGenerate
                 }
 
                 $fields["dataType"] = $this->getDataType($fields);
-
             }
-
         }
 
         return $fullDataTable;
@@ -374,7 +373,6 @@ class EntityGenerate
             "type" => $typeBanco,
             "typePhp" => $typePhp
         ];
-
     }
 
     /**
@@ -419,5 +417,4 @@ class EntityGenerate
             throw new Exception($e->getMessage());
         }
     }
-
 }

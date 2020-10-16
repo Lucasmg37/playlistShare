@@ -1,4 +1,4 @@
-.menu-component-container {
+.MenuContainer {
   display: flex;
   height: 100vh;
   flex-direction: column;
@@ -9,7 +9,6 @@
   ul,
   footer {
     list-style: none;
-    font-size: 1.2em;
     font-weight: 300;
     color: #ddd;
     transition: all ease 0.2s;
@@ -26,11 +25,15 @@
     margin-top: auto;
   }
 
-  a {
+  a,
+  button {
     text-decoration: none;
     color: #ddd;
     margin-bottom: 8px;
     transition: all ease 0.2s;
+    border: none;
+    background: none;
+    font-size: 24px;
   }
 
   img {

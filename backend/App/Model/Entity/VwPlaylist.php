@@ -118,6 +118,26 @@ class VwPlaylist extends BdAction
 
 
     /**
+     * @var $st_idownerspotify
+     */
+    public $st_idownerspotify;
+
+
+    /**
+     * @var $st_nameownerspotify
+     */
+    public $st_nameownerspotify;
+
+
+    /**
+     * @var $has_owner_platform
+     * @required
+     * @default 0
+     */
+    public $has_owner_platform;
+
+
+    /**
      * @var $st_nomeusuario
      * @required
      */
@@ -265,6 +285,33 @@ class VwPlaylist extends BdAction
     public function getBlSincronizar()
     {
         return $this->bl_sincronizar;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getStIdownerspotify()
+    {
+        return $this->st_idownerspotify;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getStNameownerspotify()
+    {
+        return $this->st_nameownerspotify;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getHasOwnerPlatform()
+    {
+        return $this->has_owner_platform;
     }
 
 
@@ -440,6 +487,36 @@ class VwPlaylist extends BdAction
     public function setBlSincronizar($bl_sincronizar)
     {
         $this->bl_sincronizar = $bl_sincronizar;
+        $this->atualizaAtributos($this);
+    }
+
+
+    /**
+     * @param string $st_idownerspotify
+     */
+    public function setStIdownerspotify($st_idownerspotify)
+    {
+        $this->st_idownerspotify = $st_idownerspotify;
+        $this->atualizaAtributos($this);
+    }
+
+
+    /**
+     * @param string $st_nameownerspotify
+     */
+    public function setStNameownerspotify($st_nameownerspotify)
+    {
+        $this->st_nameownerspotify = $st_nameownerspotify;
+        $this->atualizaAtributos($this);
+    }
+
+
+    /**
+     * @param int $has_owner_platform
+     */
+    public function setHasOwnerPlatform($has_owner_platform)
+    {
+        $this->has_owner_platform = $has_owner_platform;
         $this->atualizaAtributos($this);
     }
 

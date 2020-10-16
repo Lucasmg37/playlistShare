@@ -1,0 +1,50 @@
+.toggleContainer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+
+  & > span {
+    color: #fff;
+    font-size: 16px;
+    font-weight: normal;
+  }
+
+  button {
+    width: 72px;
+    background: #101022;
+    border-radius: 32px;
+    padding: 6px;
+    cursor: pointer;
+    border: 1px solid #fff;
+    margin-bottom: 8px;
+    transition: all ease-in 0.2s;
+    display: flex;
+    margin-right: 8px;
+
+    &::before {
+      content: '';
+      width: 24px;
+      height: 24px;
+      background: #fff;
+      display: block;
+      border-radius: 50%;
+      transition: all ease-in 0.2s;
+      margin-left: 0;
+    }
+
+    &:hover {
+      background: none;
+
+      &::before {
+        opacity: 0.7;
+      }
+    }
+
+    &.active {
+      &::before {
+        background: #63c38d;
+        margin-left: 34px;
+      }
+    }
+  }
+}

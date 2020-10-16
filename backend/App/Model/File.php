@@ -6,6 +6,7 @@ use App\Constants\TipoArquivo;
 use App\Util\Helper;
 use App\Util\Server;
 use Exception;
+use ZipArchive;
 
 class File extends Model
 {
@@ -243,10 +244,37 @@ class File extends Model
             //Criar caminho absoluto
             $absolutePath = $st_file;
             return unlink($absolutePath);
-
         } catch (Exception $e) {
             throw $e;
         }
     }
 
+    public static function createPath($pathName)
+    {
+        $pathNameArray = explode("/", $pathName);
+        $pathBase = "../Files/";
+
+        foreach ($pathNameArray as $path) {
+
+            $pathBase = $pathBase . "$path/";
+
+            if (!is_dir($pathBase)) {
+                mkdir($pathBase);
+            }
+        }
+    }
+
+    public static  function createZipFile($files = [], $pathName, $fileName)
+    {
+        $filePath = $pathName . "/" . $fileName;
+
+        $zip = new ZipArchive();
+        $zip->open($filePath, ZipArchive::CREATE);
+        foreach ($files as $file) {
+            $zip->addFile($file["file"], str_replace("/", "_", $file["name"]));
+        }
+        $zip->close();
+
+        return $filePath;
+    }
 }

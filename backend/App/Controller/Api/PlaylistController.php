@@ -11,18 +11,17 @@ use App\Business\Usuario;
 use App\Constants\System\BdAction;
 use App\Controller\Controller;
 use App\Integrations\Spotify;
+use App\Model\Banco;
 use App\Model\Entity\Acesso;
+use App\Model\Entity\Like;
 use App\Model\Entity\Musicplaylist;
-use App\Model\Entity\Spotifyintegracao;
+use App\Model\Entity\Playlist as EntityPlaylist;
 use App\Model\Entity\VwAcessoplaylist;
 use App\Model\Entity\VwPlaylist;
 use App\Model\Model;
-use App\Model\Validate;
 use App\Transformer\PlaylistSpotify;
 use App\Transformer\TrackSpotify;
 use App\Transformer\UsuarioSpotify;
-use App\Util\Debug;
-use App\Util\Helper;
 use Exception;
 
 class PlaylistController extends Controller
@@ -67,7 +66,6 @@ class PlaylistController extends Controller
         }
 
         return $playlist->getPlaylist($id_playlist);
-
     }
 
     /**
@@ -156,13 +154,11 @@ class PlaylistController extends Controller
                         }
                     }
                 }
-
             }
         }
 
         $musics = new Musics();
         return $musics->getAllbyPlaylist($id_playlist);
-
     }
 
     /**
@@ -194,7 +190,6 @@ class PlaylistController extends Controller
             "bl_ativo" => BdAction::WHERE_EQUAL,
             "bl_privada" => BdAction::WHERE_EQUAL
         ]);
-
     }
 
     /**
@@ -230,7 +225,6 @@ class PlaylistController extends Controller
         }
 
         return $playlistEntity;
-
     }
 
     /**
@@ -262,7 +256,6 @@ class PlaylistController extends Controller
         }
 
         return $musicPlaylist;
-
     }
 
     /**
@@ -295,8 +288,7 @@ class PlaylistController extends Controller
             $spotify->addMusicsIntoPlaylist($send, $playlistEntity->getStIdspotify());
         }
 
-        return $playlistEntity;
-
+        return $this->getAction($playlistEntity->id_playlist);
     }
 
     /**
@@ -328,19 +320,21 @@ class PlaylistController extends Controller
             $object = PlaylistSpotify::toObject($playlistretorno);
             $playlist = new \App\Model\Entity\Playlist([
                 "st_idspotify" => $object->id,
-                "id_usuario" => Usuario::getUserLogged()->getIdUsuario(),
                 "bl_sincronizado" => 1,
                 "bl_ativo" => 1,
             ]);
 
             $playlistretorno["bl_sincronizado"] = $playlist->isExists();
 
+            if ($playlistretorno["bl_sincronizado"]) {
+                $playlistretorno["playlist"] = $playlist;
+            }
+
             if ($object->owner->id === $integracao->getStId()) {
                 $userPlaylist[] = $playlistretorno;
             } else {
                 $likedPlaylists[] = $playlistretorno;
             }
-
         }
 
         return [
@@ -364,42 +358,10 @@ class PlaylistController extends Controller
         $ownerPlaylist = $playlistObject->owner->id;
         $integracao = $spotify->getIntegracao($id_usuario)->getStId();
 
-        //Criar usuário
-        if ($integracao !== $ownerPlaylist){
-            $spotifyIntegracao = new Spotifyintegracao();
-            $spotifyIntegracao->setStId($ownerPlaylist);
-            $spotifyIntegracao->findAndMount();
-
-            $id_usuario = $spotifyIntegracao->getIdUsuario();
-
-            //Se não existir usuário, ele deverá ser criado
-            if (!$spotifyIntegracao->getIdSpotifyintegracao()){
-                //Buscar dados do usuário no Spotify
-                $usuarioSpotify = UsuarioSpotify::toObject($spotify->getUserData($ownerPlaylist));
-                $usuarioBussines = new Usuario();
-                $usuarioEntity = $usuarioBussines->createUsuario($usuarioSpotify->id, Helper::criptografaWithDate($usuarioSpotify->id), $usuarioSpotify->display_name, 0);
-                $id_usuario = $usuarioEntity->getIdUsuario();
-
-                $spotifyIntegracao->clearObject();
-                $spotifyIntegracao->setStEmail($usuarioSpotify->id);
-                $spotifyIntegracao->setIdUsuario($usuarioEntity->getIdUsuario());
-                $spotifyIntegracao->setStId($usuarioSpotify->id);
-                $spotifyIntegracao->setStDisplayname($usuarioSpotify->display_name);
-                $spotifyIntegracao->setStUri($usuarioSpotify->uri);
-                $spotifyIntegracao->setStCode(' ');
-                $spotifyIntegracao->setBlPremium($usuarioSpotify->premium);
-                $spotifyIntegracao->validate(Validate::GLOBAL, []);
-                $spotifyIntegracao->insert();
-
-            }
-
-        }
-
         $playlistEntity = new \App\Model\Entity\Playlist([
-                "id_usuario" => $id_usuario,
-                "bl_ativo" => 1,
-                "st_idspotify" => $id_spotify]
-        );
+            "bl_ativo" => 1,
+            "st_idspotify" => $id_spotify
+        ]);
 
         if ($playlistEntity->isExists()) {
             throw new Exception("Playlist já existe no Group List");
@@ -412,7 +374,22 @@ class PlaylistController extends Controller
             $id_usuario,
             !$playlistObject->public,
             $playlistObject->collaborative,
-            true);
+            true
+        );
+
+        $playlistEntity->setStIdspotify($id_spotify);
+        $playlistEntity->save();
+
+        if ($integracao !== $ownerPlaylist) {
+            $usuarioSpotify = UsuarioSpotify::toObject($spotify->getUserData($ownerPlaylist));
+            $playlistEntity->setStIdownerspotify($usuarioSpotify->id);
+            $playlistEntity->setStNameownerspotify($usuarioSpotify->display_name);
+            $playlistEntity->setDtUpdatespotify(Model::nowTime());
+            $playlistEntity->save();
+
+            $like = new Like(['user_id' => $id_usuario, 'playlist_id' => $playlistEntity->getIdPlaylist()]);
+            $like->insert();
+        }
 
         $tracks = $spotify->getPlaylistTracks($id_spotify);
 
@@ -426,11 +403,22 @@ class PlaylistController extends Controller
         }
 
         $playlistEntity->setBlSincronizado(1);
-        $playlistEntity->setStIdspotify($id_spotify);
         $playlistEntity->setStCapa($playlistObject->image);
         $playlistEntity->save();
 
         return $playlistEntity;
+    }
+
+    public function getMoreAccessAction()
+    {
+        return Model::executeSource(Banco::getConection(), "select pla.*, count(ac.id_playlist) as number_access from tb_acesso as ac join vw_playlist as pla on pla.id_playlist = ac.id_playlist where ac.id_usuario = 24 and dt_acesso > '2020-09-24 20:25:46' group by ac.id_playlist order by number_access desc limit 10");
+    }
+
+    public function getTracksPlaylistSpotifyAction($id_spotify)
+    {
+        $spotify = new Spotify(true);
+        $tracks = $spotify->getPlaylistTracks($id_spotify);
+        return $tracks;
     }
 
     /**
@@ -439,10 +427,12 @@ class PlaylistController extends Controller
      */
     public function myPlaylistsAction()
     {
-        $playlist = new \App\Model\Entity\Playlist();
+        $playlist = new \App\Model\Entity\VwPlaylist();
         $playlist->setIdUsuario(Usuario::getUserLogged()->getIdUsuario());
+        $playlist->setHasOwnerPlatform(1);
         $playlist->setBlAtivo(1);
-        return $playlist->find();
+        $playlists = $playlist->find();
+        return $playlists;
     }
 
     /**
@@ -501,7 +491,6 @@ class PlaylistController extends Controller
                 $track->findAndMount();
                 $uris[] = $track->getStUrispotify();
             }
-
         }
 
         if ($config->getBlSincronizaclone() && $playlist->getBlSincronizado()) {
@@ -509,7 +498,53 @@ class PlaylistController extends Controller
         }
 
         return $playlist;
-
     }
 
+
+    public function sincAction($id_playlist)
+    {
+
+        $playlist = new Playlist();
+
+        //Buscar novas músicas no spotify
+        $playlistEntity = new \App\Model\Entity\Playlist();
+        $playlistEntity->findOne($id_playlist);
+
+        $playlist->updatePlaylistFromSpotify($playlistEntity);
+
+        if ($playlistEntity->getBlSincronizado() && $playlistEntity->getBlSincronizar()) {
+            $config = Usuario::getConfigUser();
+            if ($config->getBlBuscamudancasspotify() && Playlist::ownerPlaylistUser($playlistEntity->getIdPlaylist())) {
+                $differences = $playlist->getDiferencesBetween($playlistEntity->getIdPlaylist());
+
+                if (sizeof($differences["differences_spotify"]) > 0) {
+                    $music = new Musics();
+
+                    foreach ($differences["differences_spotify"] as $item) {
+                        $musicPlaylist = new Musicplaylist(["id_playlist" => $id_playlist, "id_spotify" => $item["id_spotify"], "bl_ativo" => 1]);
+
+                        if (!$musicPlaylist->isExists()) {
+                            $music->createNewMusic($id_playlist, $item["id_spotify"]);
+                            $track = new Track();
+                            $track->createTrackIfnotExists($item["id_spotify"]);
+                        }
+                    }
+                }
+
+                if (sizeof($differences["differences_list"]) > 0) {
+
+                    foreach ($differences["differences_list"] as $item) {
+                        $musicPlaylist = new Musicplaylist(["id_playlist" => $id_playlist, "id_spotify" => $item["id_spotify"], "bl_ativo" => 1]);
+
+                        if ($musicPlaylist->isExists()) {
+                            $musicPlaylist->mount(["id_playlist" => $id_playlist, "id_spotify" => $item["id_spotify"], "bl_ativo" => 1]);
+                            $musicPlaylist->findAndMount();
+                            $musicPlaylist->setBlAtivo("0");
+                            $musicPlaylist->save();
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

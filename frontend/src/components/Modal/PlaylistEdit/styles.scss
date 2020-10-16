@@ -1,0 +1,45 @@
+.PlaylistEditContainer {
+  width: 50vw;
+  display: block;
+  padding: 24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-height: 90vh;
+
+  header {
+    margin-bottom: 24px;
+
+    h1 {
+      color: #ddd;
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+  }
+
+  input,
+  textarea {
+    border: 1px solid #fff;
+    width: 100%;
+    border-radius: 8px;
+    padding: 0 16px;
+    display: flex;
+    font-size: 24px;
+    color: #fff;
+    align-items: center;
+    background: #101022;
+    padding: 16px;
+    font-size: 24px;
+    transition: all ease-in 0.2s;
+    margin-bottom: 8px;
+
+    &:hover {
+      background: none;
+    }
+
+    &:focus {
+      background: none;
+    }
+  }
+}

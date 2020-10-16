@@ -11,7 +11,8 @@ class Token
      * @param string $authorizationHeader
      * @return bool|mixed
      */
-    public static function getTokenByAuthorizationHeader($authorizationHeader = null) {
+    public static function getTokenByAuthorizationHeader($authorizationHeader = null)
+    {
 
         if (!$authorizationHeader) {
             $authorizationHeader = HeaderTools::getAuthorizationHeader();
@@ -30,5 +31,4 @@ class Token
         }
         return false;
     }
-
 }

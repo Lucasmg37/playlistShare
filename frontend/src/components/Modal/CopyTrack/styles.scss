@@ -1,0 +1,106 @@
+.CopyTrackContainer {
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+  flex: 1;
+  padding: 24px;
+
+  header {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    padding: 16px;
+    border-radius: 8px;
+    background: #101022;
+
+    img {
+      height: 80px;
+      width: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-right: 16px;
+    }
+  }
+
+  h1 {
+    color: #fff;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    margin-top: 24px;
+    margin-bottom: 8px;
+
+    svg {
+      margin-left: 16px;
+    }
+  }
+
+  button {
+    margin-top: 16px;
+  }
+
+  > ul {
+    display: flex;
+    flex: 1;
+    overflow: auto;
+    flex-direction: column;
+    padding-right: 16px;
+
+    &::-webkit-scrollbar-track {
+      background-color: #070719;
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #101022;
+    }
+
+    li {
+      width: 100%;
+      margin-bottom: 8px;
+      opacity: 0.6;
+      transition: all ease-in 0.2s;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    button {
+      background: #101022;
+      border: none;
+      padding: 16px;
+      border-radius: 8px;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      cursor: pointer;
+
+      img {
+        height: 80px;
+        width: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-right: 16px;
+      }
+
+      span {
+        color: #fff;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      svg {
+        height: 40px;
+        width: 40px;
+        margin: auto 16px auto auto;
+        color: #fff;
+        opacity: 0.5;
+      }
+    }
+  }
+}

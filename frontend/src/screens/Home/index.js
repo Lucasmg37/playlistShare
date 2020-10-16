@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 
-import api from '../../services/api';
 import Loading from '../../components/Loading';
-import { usePlaylist } from '../../hooks/playlist';
-import './styles.scss';
 import CardLarge from '../../components/CardLarge';
 import Carousel from '../../components/Carousel';
 import Card from '../../components/Card';
 
+import api from '../../services/api';
+
+import './styles.scss';
+import { useFetch } from '../../hooks/useFetch';
+
 export default function Home({ history }) {
   const [playlists, setPlaylists] = useState([]);
   const [loaded, setLoaded] = useState(false);
-  const { setPlaylistActive } = usePlaylist();
+
+  const { data: topMyPlaylists, error: errorTopMyPlaylists } = useFetch(`/Playlist/getMoreAccess`);
 
   useEffect(() => {
     async function loadTopPlaylists() {
@@ -21,14 +24,14 @@ export default function Home({ history }) {
     }
 
     loadTopPlaylists();
-  }, [setPlaylistActive]);
+  }, []);
 
   function openPlaylist(id_playlist) {
     history.push(`/playlist/${id_playlist}`);
   }
 
   return (
-    <div className="container-screen-home">
+    <div className="HomeContainer">
       {loaded ? (
         <>
           <Carousel title="As mais acessadas">
@@ -43,17 +46,18 @@ export default function Home({ history }) {
               ))}
           </Carousel>
 
-          <Carousel title="Atalhos">
-            {playlists !== undefined &&
-              playlists.length > 0 &&
-              playlists.map(playlist => (
-                <Card
-                  key={playlist.id_playlist}
-                  playlist={playlist}
-                  onClick={() => openPlaylist(playlist.id_playlist)}
-                />
-              ))}
-          </Carousel>
+          {topMyPlaylists && (
+            <Carousel title="Atalhos">
+              {!!topMyPlaylists.data.length &&
+                topMyPlaylists.data.map(playlist => (
+                  <Card
+                    key={playlist.id_playlist}
+                    playlist={playlist}
+                    onClick={() => openPlaylist(playlist.id_playlist)}
+                  />
+                ))}
+            </Carousel>
+          )}
 
           <Carousel title="Recentemente vizualizadas">
             {playlists !== undefined &&

@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import './App.css';
 import Login from './screens/Login/Login';
@@ -8,6 +9,8 @@ import SignUpSuccess from './screens/SignUpSuccess';
 import Recovery from './screens/Recovery/Recovery';
 import Painel from './screens/Painel';
 import AppProvider from './hooks';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
   return (
@@ -22,6 +25,7 @@ export default function App() {
           <Route path="/" component={Painel} />
         </Switch>
       </BrowserRouter>
+      <ToastContainer />
     </AppProvider>
   );
 }

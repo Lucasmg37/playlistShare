@@ -7,6 +7,7 @@ namespace App\Controller\Api;
 use App\Business\CodeUser;
 use App\Business\Usuario;
 use App\Controller\Controller;
+use App\Integrations\Spotify;
 use App\Model\Entity\Config;
 use App\Model\Entity\Usuarios;
 use App\Model\MailService;
@@ -62,7 +63,6 @@ class UsuarioController extends Controller
         $config->save();
 
         return $config;
-
     }
 
     /**
@@ -112,7 +112,6 @@ class UsuarioController extends Controller
         $mail->sendEmailRecupercaodeSenha($usuarioEntity->getStLogin(), $usuarioEntity->getStNome(), $codeUser->getStCode());
 
         return true;
-
     }
 
     /**
@@ -137,7 +136,6 @@ class UsuarioController extends Controller
         $usuarioEntity->save();
 
         return \App\Transformer\Usuario::getDataPublic($usuarioEntity);
-
     }
 
     /**
@@ -157,7 +155,12 @@ class UsuarioController extends Controller
         $mail->sendEmailActivate($usuarioEntity->getStLogin(), $usuarioEntity->getStNome(), $codeUserEntity->getStCode());
 
         return true;
-
     }
 
+    public function getAccessTokenSpotifyAction()
+    {
+        $spotify = new Spotify(true);
+        $spotify->getTokenAcessUserByCode();
+        return $spotify->getAccessToken();
+    }
 }

@@ -34,18 +34,24 @@ class Route
         $this->router->setNewRoute("POST", "Usuario", "recoveryPassword");
         $this->router->setNewRoute("POST", "Usuario", "validateRecovery");
         $this->router->setNewRoute("POST", "Usuario", "resendEmailActivate");
+        $this->router->setNewRoute("GET", "Usuario", "getAccessTokenSpotify");
 
         $this->router->setNewRoute("GET", "Playlist", "getMusics");
         $this->router->setNewRoute("GET", "Playlist", "getSpotify");
         $this->router->setNewRoute("GET", "Playlist", "myPlaylists");
         $this->router->setNewRoute("GET", "Playlist", "getTopPlaylists");
         $this->router->setNewRoute("GET", "Playlist", "getByName");
+        $this->router->setNewRoute("GET", "Playlist", "getTracksPlaylistSpotify");
+        $this->router->setNewRoute("GET", "Playlist", "getMoreAccess");
         $this->router->setNewRoute("POST", "Playlist", "makeCopy");
         $this->router->setNewRoute("POST", "Playlist", "newMusic");
         $this->router->setNewRoute("POST", "Playlist", "getPlaylistSpotify");
+        $this->router->setNewRoute("POST", "Playlist", "sinc");
         $this->router->setNewRoute("DELETE", "Playlist", "removeMusic");
 
         $this->router->setNewRoute("GET", "Music", "getTopTracksUser");
+        $this->router->setNewRoute("GET", "File", "getPlaylist");
+        $this->router->setNewRoute("GET", "File", "generateZipFilePlaylist");
 
         $this->router->setNewRoute("GET", "Converter", "downloadAll");
 

@@ -1,5 +1,5 @@
 export const api = {
-  endpoint: 'http://groupmusicapi.lucasjunior.com.br/Api/',
+  endpoint: 'http://playlistshare.localhost:8000/Api/',
 };
 
 export const spotify = {
